@@ -54,7 +54,7 @@ begin
   from pg_tables
   where schemaname in (${schemas.map((n) => `'${n}'`).join(",")})
   AND ${
-    skipTables
+    skipTables.length > 0
       ? `tablename not in (${skipTables.map((n) => `'${n}'`).join(",")})`
       : "1=1"
   }
