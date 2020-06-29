@@ -20,8 +20,5 @@ yarn test:watch # unit tests in watch mode
 ## Releasing
 
 ```sh
-git push
-yarn prepare-release
-git push --follow-tags origin master
-yarn publish
+yarn release
 ```
