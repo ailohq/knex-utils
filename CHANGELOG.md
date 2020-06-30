@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ailohq/ailo-knex-utils/compare/v1.0.8...v1.1.0) (2020-06-30)
+
+
+### Features
+
+* Add `local-db` bin file ([30b0722](https://github.com/ailohq/ailo-knex-utils/commit/30b0722180c35e723d75bf8985ac5fcf0c75c710))
+
 ### [1.0.8](https://github.com/ailohq/ailo-knex-utils/compare/v1.0.7...v1.0.8) (2020-06-30)
 
 
