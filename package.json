@@ -8,6 +8,9 @@
   "repository": "https://github.com/ailohq/ailo-knex-utils",
   "license": "MIT",
   "keywords": [],
+  "bin": {
+    "local-db": "./bin/local-db.sh"
+  },
   "scripts": {
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
