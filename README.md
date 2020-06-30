@@ -17,18 +17,18 @@ Then, depending on what you need:
 ```ts
 // database/migrations/tests/1002_rename_user_to_person.test.ts
 import { useKnex } from "@ailo/knex-utils/build/main/test-utils";
-import knexFactory from "knex";
 import { testMigrationConfig } from "knexConfig";
 import moment from "moment";
 import { up } from "../1002_rename_user_to_person";
 
-const knex = useKnex({
-  knex: knexFactory(testMigrationConfig),
+const knexRef = useKnex({
   knexConfig: testMigrationConfig,
   migrateTo: "1001",
 });
 
 it("db migration 1002_rename_user_to_person works", async () => {
+  const knex = knexRef.current;
+
   await knex("user").insert({
     name: "john",
   });
