@@ -6,7 +6,19 @@ import { truncateDatabase, TruncateDatabaseConfig } from "./truncateDatabase";
 export interface UseKnexConfig {
   knex: Knex;
   knexConfig: Knex.Config;
+  /**
+   * Optionally, pass a version ID (like "20200521164132"), to migrate only to specific db version.
+   * Useful for testing db migrations
+   * (migrate to previous one, and run your own's migration `up` manually in order to test it.)
+   */
   migrateTo?: string | number;
+  /**
+   * By default, database is created only once (in `beforeAll` callback).
+   * Switch this to `true` to recreate it on each test run (in `beforeEach` callback).
+   *
+   * If `migrateTo` is present, this is switched to `true` by default.
+   */
+  recreateOnEachRun?: boolean;
   clearConfig?: ClearDatabaseConfig;
   truncateConfig?: TruncateDatabaseConfig;
 }
@@ -44,37 +56,38 @@ export interface UseKnexConfig {
 export function useKnex({
   knex,
   knexConfig,
-  /**
-   * Optionally, pass a version ID (like "20200521164132"), to migrate only to specific db version.
-   * Useful for testing db migrations
-   * (migrate to previous one, and run your own's migration `up` manually in order to test it.)
-   */
   migrateTo,
+  recreateOnEachRun = !!migrateTo,
   clearConfig,
   truncateConfig,
 }: UseKnexConfig) {
   const runsOnLatestMigration = !migrateTo;
 
   beforeAll(async () => {
-    if (runsOnLatestMigration) {
-      // If we want to be running on the latest db version,
-      // let's just make sure recent db migrations have been run
+    if (!recreateOnEachRun) {
+      if (runsOnLatestMigration) {
+        await knex.migrate.latest();
+      } else {
+        await clearDatabase(knex, clearConfig);
+        await knexMigrate("up", { config: knexConfig, to: migrateTo });
+      }
+    }
+  });
+
+  beforeEach(async () => {
+    if (!recreateOnEachRun) {
+      await truncateDatabase(knex, { ...truncateConfig, keepMigrations: true });
+    } else if (runsOnLatestMigration) {
+      await clearDatabase(knex, clearConfig);
       await knex.migrate.latest();
     } else {
-      // Otherwise clear the database and migrate it to specific db version
       await clearDatabase(knex, clearConfig);
       await knexMigrate("up", { config: knexConfig, to: migrateTo });
     }
   });
 
-  beforeEach(async () => {
-    await truncateDatabase(knex, { ...truncateConfig, keepMigrations: true });
-  });
-
   afterAll(async () => {
-    // If we haven't been running on the latest db version,
-    // clear the database back to normal state after all tests
-    if (!runsOnLatestMigration) {
+    if (!recreateOnEachRun && !runsOnLatestMigration) {
       await clearDatabase(knex, clearConfig);
     }
 
