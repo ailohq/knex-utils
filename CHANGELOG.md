@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/ailohq/ailo-knex-utils/compare/v1.1.0...v1.2.0) (2020-06-30)
+
+
+### Features
+
+* Add `useSeparateDatabase` option to useKnex helper ([cb5f977](https://github.com/ailohq/ailo-knex-utils/commit/cb5f977385001eca8146fa8836c0e25034d8956f))
+
 ## [1.1.0](https://github.com/ailohq/ailo-knex-utils/compare/v1.0.8...v1.1.0) (2020-06-30)
 
 
