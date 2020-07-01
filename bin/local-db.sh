@@ -46,17 +46,18 @@ function launch_container() {
                     -d postgres:11
     DB_PORT=$(docker port "${DB_NAME}${DOCKER_SUFFIX}" 5432 | cut -d':' -f2)
 
-    echo "To run the node app/tests with local db, prefix your commands with:"
+    echo -e "\nTo run node app/tests with local db, use following env vars:"
     echo "DB_HOST=$DB_HOST DB_NAME=$DB_NAME DB_USER=$DB_USER DB_PASSWORD=$DB_PASSWORD DB_PORT=$DB_PORT node ..."
 
-    echo "To connect to the database using \`psql\`, use:"
+    echo -e "\nTo connect to the database using \`psql\`, use:"
     echo "PGHOST=$DB_HOST PGDATABASE=$DB_NAME PGUSER=$DB_USER PGPASSWORD=$DB_PASSWORD PGPORT=$DB_PORT psql"
 
-    echo "You can also run it by using tmp/local-db file, like \`tmp/local-db-exec psql\`"
-    mkdir -p tmp
-    echo "#!/bin/sh" > tmp/local-db-exec
-    echo "PGHOST=$DB_HOST PGDATABASE=$DB_NAME PGUSER=$DB_USER PGPASSWORD=$DB_PASSWORD PGPORT=$DB_PORT DB_HOST=$DB_HOST DB_NAME=$DB_NAME DB_USER=$DB_USER DB_PASSWORD=$DB_PASSWORD DB_PORT=$DB_PORT \"\$@\"" >> tmp/local-db-exec
-    chmod +x tmp/local-db-exec
+    LOCAL_DB_ENV_SCRIPT="$(mktemp -d)/local-db-exec"
+    echo -e "\nAlternatively, prefix your command in the following manner, to have it run with all of the above vars at once:"
+    echo -e "$LOCAL_DB_ENV_SCRIPT ...\n"
+    echo "#!/bin/sh" > $LOCAL_DB_ENV_SCRIPT
+    echo "PGHOST=$DB_HOST PGDATABASE=$DB_NAME PGUSER=$DB_USER PGPASSWORD=$DB_PASSWORD PGPORT=$DB_PORT DB_HOST=$DB_HOST DB_NAME=$DB_NAME DB_USER=$DB_USER DB_PASSWORD=$DB_PASSWORD DB_PORT=$DB_PORT \"\$@\"" >> $LOCAL_DB_ENV_SCRIPT
+    chmod +x $LOCAL_DB_ENV_SCRIPT
 }
 
 function stop_container() {
