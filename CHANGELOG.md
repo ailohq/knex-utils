@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/ailohq/ailo-knex-utils/compare/v1.2.0...v1.2.1) (2020-07-01)
+
+
+### Bug Fixes
+
+* Make `local-db` use `mktemp` to generate a tmp/local-db-exec file ([d52df98](https://github.com/ailohq/ailo-knex-utils/commit/d52df981bc4675476582db34388652d075cc069e))
+
 ## [1.2.0](https://github.com/ailohq/ailo-knex-utils/compare/v1.1.0...v1.2.0) (2020-06-30)
 
 
