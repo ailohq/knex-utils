@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/ailohq/knex-utils/compare/v1.3.0...v1.4.0) (2020-07-03)
+
+
+### Features
+
+* Export all test-utils in the main index.ts file ([f9a55bf](https://github.com/ailohq/knex-utils/commit/f9a55bf206f83f3504adbf97c228ee5964d5b3f7))
+* Update docs on migration utils; move them to src directory; export them in the main index file ([58f7833](https://github.com/ailohq/knex-utils/commit/58f783346a50c7d44e72831bbd0c6a9e8dd135a3))
+
 ## [1.3.0](https://github.com/ailohq/ailo-knex-utils/compare/v1.2.1...v1.3.0) (2020-07-03)
 
 
