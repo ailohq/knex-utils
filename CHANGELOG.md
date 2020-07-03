@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/ailohq/ailo-knex-utils/compare/v1.2.1...v1.3.0) (2020-07-03)
+
+
+### Features
+
+* **AILO-3171:** Extract migration scripts to create history table with some improvements to make `type` a required parameter ([02c41f4](https://github.com/ailohq/ailo-knex-utils/commit/02c41f46656d94a7291f2866c7c25477b81f75e4))
+
 ### [1.2.1](https://github.com/ailohq/ailo-knex-utils/compare/v1.2.0...v1.2.1) (2020-07-01)
 
 
