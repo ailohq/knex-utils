@@ -155,7 +155,7 @@ Then, create the `car_table_history` table:
 
    ```js
    const sqlMigration = require("knex-migrate-sql-file")();
-   const createHistoryMigration = require("@ailo/knex-utils");
+   const { createHistoryMigration } = require("@ailo/knex-utils");
    const carMigration = createHistoryMigration({
      tableName: "car_table",
      typeName: "car",
