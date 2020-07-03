@@ -5,7 +5,7 @@
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/ailohq/ailo-knex-utils",
+  "repository": "https://github.com/ailohq/knex-utils",
   "license": "MIT",
   "keywords": [],
   "bin": {
