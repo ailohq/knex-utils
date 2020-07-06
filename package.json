@@ -14,6 +14,7 @@
   "scripts": {
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
+    "build:assets": "mkdir -p build && cp -r assets build/assets",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",

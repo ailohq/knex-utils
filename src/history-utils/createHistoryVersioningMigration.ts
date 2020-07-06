@@ -1,9 +1,13 @@
 import fs from "fs";
+import path from "path";
 import Knex from "knex";
 
 function up(knex: Knex) {
   const sql = fs.readFileSync(
-    `${__dirname}/createHistoryVersioningMigration.sql`,
+    path.resolve(
+      __dirname,
+      "../../assets/createHistoryVersioningMigration.sql"
+    ),
     "utf8"
   );
   return knex.schema.raw(sql);
