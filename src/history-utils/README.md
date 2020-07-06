@@ -84,12 +84,12 @@ First, create a migration to change the existing table to use [PostgreSQL Type](
 
 ##### Important: Ensure the schema of the type matches the existing table schema.
 
-Assuming that a `car_table` already exists:
+Assuming that a `car` table already exists:
 
 1. Create `20200611163000_car_type.up.sql` for `migration:up`:
 
    ```sql
-   create type car as (
+   create type car_type as (
        id uuid,
        name varchar(255),
        created_at timestamp,
@@ -97,32 +97,32 @@ Assuming that a `car_table` already exists:
        sys_period tstzrange
    );
 
-   ALTER TABLE car_table ADD COLUMN IF NOT EXISTS sys_period tstzrange NOT NULL DEFAULT tstzrange(current_timestamp, null);
-   ALTER TABLE car_table OF car;
+   ALTER TABLE car ADD COLUMN IF NOT EXISTS sys_period tstzrange NOT NULL DEFAULT tstzrange(current_timestamp, null);
+   ALTER TABLE car OF car_type;
    ```
 
 2. Create `20200611163000_car_type.down.sql` for `migration:down`:
 
    ```sql
-   ALTER TABLE car_table NOT OF;
-   ALTER TABLE car_table DROP COLUMN IF EXISTS sys_period;
-   DROP TYPE car;
+   ALTER TABLE car NOT OF;
+   ALTER TABLE car DROP COLUMN IF EXISTS sys_period;
+   DROP TYPE car_type;
    ```
 
-3. Create `20200611163000_car_type.js` to hook up both up and down sql files, to create the `car` type:
+3. Create `20200611163000_car_type.js` to hook up both up and down sql files, to create the `car_type` type:
 
    ```js
    module.exports = require("knex-migrate-sql-file")();
    ```
 
-Then, create the `car_table_history` table:
+Then, create the `car_history` table:
 
 4. Create `20200611163001_car_history.js`:
 
    ```js
    module.exports = require("@ailo/knex-utils").createHistoryMigration({
-     tableName: "car_table",
-     typeName: "car",
+     tableName: "car",
+     typeName: "car_type",
    });
    ```
 
@@ -131,7 +131,7 @@ Then, create the `car_table_history` table:
 1. Create `20200611163000_car_history.up.sql` for `migration:up`:
 
    ```sql
-   create type car as (
+   create type car_type as (
        id uuid,
        name varchar(255),
        created_at timestamp,
@@ -139,16 +139,16 @@ Then, create the `car_table_history` table:
        sys_period tstzrange
    );
 
-   ALTER TABLE car_table ADD COLUMN IF NOT EXISTS sys_period tstzrange NOT NULL DEFAULT tstzrange(current_timestamp, null);
-   ALTER TABLE car_table OF car;
+   ALTER TABLE car ADD COLUMN IF NOT EXISTS sys_period tstzrange NOT NULL DEFAULT tstzrange(current_timestamp, null);
+   ALTER TABLE car OF car_type;
    ```
 
 2. Create `20200611163000_car_history.down.sql` for `migration:down`:
 
    ```sql
-   ALTER TABLE car_table NOT OF;
-   ALTER TABLE car_table DROP COLUMN IF EXISTS sys_period;
-   DROP TYPE car;
+   ALTER TABLE car NOT OF;
+   ALTER TABLE car DROP COLUMN IF EXISTS sys_period;
+   DROP TYPE car_type;
    ```
 
 3. Create `20200611163000_car_history.js` to hook up both up and down sql files:
@@ -157,8 +157,8 @@ Then, create the `car_table_history` table:
    const sqlMigration = require("knex-migrate-sql-file")();
    const { createHistoryMigration } = require("@ailo/knex-utils");
    const carMigration = createHistoryMigration({
-     tableName: "car_table",
-     typeName: "car",
+     tableName: "car",
+     typeName: "car_type",
    });
 
    exports.up = async function (knex) {
@@ -179,16 +179,16 @@ Create a migration file `20200612163000_alter_car_add_fairy.js`:
 ```js
 exports.up = async function (knex) {
   await knex.schema.raw(`
-    ALTER TYPE car ADD ATTRIBUTE color text CASCADE;
+    ALTER TYPE car_type ADD ATTRIBUTE color text CASCADE;
   `);
   await knex.schema.raw(`
-    ALTER TABLE car_table ALTER COLUMN color SET NOT NULL;
+    ALTER TABLE car ALTER COLUMN color SET NOT NULL;
   `);
 };
 
 exports.down = async function (knex) {
   await knex.schema.raw(`
-    ALTER TYPE car DROP ATTRIBUTE color CASCADE;
+    ALTER TYPE car_type DROP ATTRIBUTE color CASCADE;
   `);
 };
 ```
@@ -200,16 +200,16 @@ Create a migration file `20200613163000_alter_car_drop_test.js`:
 ```js
 exports.up = async function (knex) {
   await knex.schema.raw(`
-    ALTER TYPE car DROP ATTRIBUTE created_by CASCADE;
+    ALTER TYPE car_type DROP ATTRIBUTE created_by CASCADE;
   `);
 };
 
 exports.down = async function (knex) {
   await knex.schema.raw(`
-    ALTER TYPE car ADD ATTRIBUTE created_by ailorn CASCADE;
+    ALTER TYPE car_type ADD ATTRIBUTE created_by ailorn CASCADE;
   `);
   await knex.schema.raw(`
-    ALTER TABLE car_table ALTER COLUMN created_by SET NOT NULL;
+    ALTER TABLE car ALTER COLUMN created_by SET NOT NULL;
   `);
 };
 ```
