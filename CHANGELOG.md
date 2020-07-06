@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/ailohq/knex-utils/compare/v1.4.0...v1.4.1) (2020-07-06)
+
+
+### Bug Fixes
+
+* Make `createHistoryVersioningMigration.sql` file be correctly present in the build package ([22a94f8](https://github.com/ailohq/knex-utils/commit/22a94f829877118127c0723d5197347ac5280c73))
+
 ## [1.4.0](https://github.com/ailohq/knex-utils/compare/v1.3.0...v1.4.0) (2020-07-03)
 
 
