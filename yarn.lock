@@ -21,6 +21,11 @@
     eslint-plugin-react-hooks "2.5.0"
     eslint-plugin-unicorn "17.2.0"
 
+"@ailo/monitoring@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@ailo/monitoring/-/monitoring-1.0.6.tgz#45f8115851bb6ee6e9a850aa43ee8b77ac22777e"
+  integrity sha512-do7YC7qNIb+oYzNi5Er8psdfChbnlaFG8uXvpuSlXcUI5r1+BuwIHOzWzOsedmEoCtnxyJQ9sqN3ACTcCAbYZQ==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.3":
   version "7.10.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.3.tgz#324bcfd8d35cd3d47dae18cde63d752086435e9a"

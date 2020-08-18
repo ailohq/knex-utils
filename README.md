@@ -12,6 +12,10 @@ yarn add @ailo/knex-utils
 
 Then, depending on what you need:
 
+#### Knex singleton instance (`KnexRef`)
+
+See [/src/KnexRef/KnexRef.ts](/src/KnexRef/KnexRef.ts).
+
 #### Test Utils (e.g. `useKnex`)
 
 ```ts
