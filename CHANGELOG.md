@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/ailohq/knex-utils/compare/v1.4.1...v1.5.0) (2020-08-18)
+
+
+### Features
+
+* Add `KnexRef` class with logging and monitoring middlewares ([e0178af](https://github.com/ailohq/knex-utils/commit/e0178af89db40922c24d2b3675f11eb5395c8e1a))
+
 ### [1.4.1](https://github.com/ailohq/knex-utils/compare/v1.4.0...v1.4.1) (2020-07-06)
 
 
