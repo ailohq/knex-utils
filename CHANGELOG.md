@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/ailohq/knex-utils/compare/v1.5.2...v1.5.3) (2020-08-20)
+
+
+### Bug Fixes
+
+* Move `@ailo/monitoring` to be a dep, not a peer dep; because the library typedefs rely on monitoring typedefs (even though its an optional dependency anyway ;/) ([40bb77c](https://github.com/ailohq/knex-utils/commit/40bb77cbdc76350852e9157246f78f9ca775fc37))
+
 ### [1.5.2](https://github.com/ailohq/knex-utils/compare/v1.5.1...v1.5.2) (2020-08-20)
 
 
