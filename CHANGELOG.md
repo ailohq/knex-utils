@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/ailohq/knex-utils/compare/v1.5.0...v1.5.1) (2020-08-20)
+
+
+### Bug Fixes
+
+* Make `@ailo/monitoring` dependency optional ([1340cc9](https://github.com/ailohq/knex-utils/commit/1340cc9192552440fc264a48e6603ab90f090940))
+
 ## [1.5.0](https://github.com/ailohq/knex-utils/compare/v1.4.1...v1.5.0) (2020-08-18)
 
 
