@@ -1,4 +1,4 @@
-import Knex, { ConnectionConfig } from "knex";
+import Knex, { PgConnectionConfig } from "knex";
 import knexMigrate from "knex-migrate";
 import { clearDatabase, ClearDatabaseConfig } from "./clearDatabase";
 import { truncateDatabase, TruncateDatabaseConfig } from "./truncateDatabase";
@@ -6,7 +6,7 @@ import { createKnexChildDatabase } from "./createKnexChildDatabase";
 
 export interface UseKnexConfig {
   knexConfig: Omit<Knex.Config, "connection"> & {
-    connection: ConnectionConfig;
+    connection: PgConnectionConfig;
   };
 
   /**

@@ -1,10 +1,10 @@
-import Knex, { ConnectionConfig } from "knex";
+import Knex, { PgConnectionConfig } from "knex";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuid } from "uuid";
 
 export interface CreateKnexChildDatabaseConfig {
   knexConfig: Omit<Knex.Config, "connection"> & {
-    connection: ConnectionConfig;
+    connection: PgConnectionConfig;
   };
 }
 
