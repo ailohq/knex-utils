@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/ailohq/knex-utils/compare/v1.5.1...v1.5.2) (2020-08-20)
+
+
+### Bug Fixes
+
+* Add missing port to ConnectionConfig typedef (https://github.com/knex/knex/pull/3372) ([143404e](https://github.com/ailohq/knex-utils/commit/143404e1df387adad99c8c3d043d255c5d8456f1))
+
 ### [1.5.1](https://github.com/ailohq/knex-utils/compare/v1.5.0...v1.5.1) (2020-08-20)
 
 
