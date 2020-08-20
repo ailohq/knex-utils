@@ -1,8 +1,8 @@
-import {
+import type {
   Monitoring,
-  Severity,
   TransactionChild,
-  TransactionStatus,
+  Severity as SeverityType,
+  TransactionStatus as TransactionStatusType,
 } from "@ailo/monitoring";
 import { BaseKnex } from "./BaseKnex";
 
@@ -13,6 +13,12 @@ export function addMonitoringToKnex({
   knex: BaseKnex;
   monitoring: Monitoring;
 }): void {
+  // eslint-disable-next-line global-require
+  const { Severity, TransactionStatus } = require("@ailo/monitoring") as {
+    Severity: typeof SeverityType;
+    TransactionStatus: typeof TransactionStatusType;
+  };
+
   const sentryTransactionsByKnexQueryUid: {
     [key: string]: TransactionChild | undefined;
   } = {};
