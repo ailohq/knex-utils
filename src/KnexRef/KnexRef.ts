@@ -15,9 +15,7 @@ interface KnexRefOptions<K extends BaseKnex = Knex> {
   monitoring?: Monitoring;
 
   /**
-   * Used to log SQL queries.
-   *
-   * Defaults to `console` by default.
+   * Used to log SQL queries. Can be `console` or a winston logger instance.
    *
    * Unused if `NODE_ENV` equals to `"test"`.
    */
@@ -67,12 +65,7 @@ export class KnexRef<K extends BaseKnex = Knex> {
 
   private readonly onChange?: (knex: K) => void;
 
-  constructor({
-    knex,
-    monitoring,
-    logger = console,
-    onChange,
-  }: KnexRefOptions<K>) {
+  constructor({ knex, monitoring, logger, onChange }: KnexRefOptions<K>) {
     this.monitoring = monitoring;
     this.logger = logger;
     this.onChange = onChange;
