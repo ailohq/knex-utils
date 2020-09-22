@@ -16,6 +16,14 @@ Then, depending on what you need:
 
 See [/src/KnexRef/KnexRef.ts](/src/KnexRef/KnexRef.ts).
 
+#### Add `ailorn` column type to postgres
+
+```js
+// database/migrations/123_create_ailorn_column_type.js
+const { CreateAilornColumnTypeMigration } = require("@ailo/knex-utils");
+module.exports = CreateAilornColumnTypeMigration;
+```
+
 #### Test Utils (e.g. `useKnex`)
 
 ```ts
