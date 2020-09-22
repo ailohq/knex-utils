@@ -39,7 +39,7 @@ export async function truncateDatabase(
     skipTables = [],
     deleteFromFirst = [],
   }: TruncateDatabaseConfig = {}
-) {
+): Promise<void> {
   return knex.raw(`
 do
 $$

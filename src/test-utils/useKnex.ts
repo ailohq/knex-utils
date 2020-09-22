@@ -74,7 +74,7 @@ export function useKnex({
   migrateOn = migrateTo ? "before-each" : "before-all",
   clearConfig,
   truncateConfig,
-}: UseKnexConfig) {
+}: UseKnexConfig): { current: Knex } {
   const runsOnLatestMigration = !migrateTo;
 
   let knex: Knex;
@@ -98,6 +98,7 @@ export function useKnex({
         if (!useSeparateDatabase) {
           await clearDatabase(knex, clearConfig);
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         await knexMigrate("up", { config: knexConfig, to: migrateTo });
       }
     });
@@ -120,6 +121,7 @@ export function useKnex({
       if (runsOnLatestMigration) {
         await knex.migrate.latest();
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         await knexMigrate("up", { config: knexConfig, to: migrateTo });
       }
     });

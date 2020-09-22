@@ -13,7 +13,7 @@ export interface ClearDatabaseConfig {
 export async function clearDatabase(
   knex: Knex,
   { dropSchemas = [] }: ClearDatabaseConfig = {}
-) {
+): Promise<void> {
   if (process.env.NODE_ENV !== "test") {
     throw new Error(
       `For safety reasons, clearDatabase() is disabled on non-test envs.

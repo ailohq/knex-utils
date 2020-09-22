@@ -10,7 +10,12 @@ export interface CreateKnexChildDatabaseConfig {
 
 export async function createKnexChildDatabase({
   knexConfig: hostKnexConfig,
-}: CreateKnexChildDatabaseConfig) {
+}: CreateKnexChildDatabaseConfig): Promise<{
+  knex: Knex;
+  knexConfig: Omit<Knex.Config, "connection"> & {
+    connection: PgConnectionConfig;
+  };
+}> {
   const childDatabaseName = `_${uuid().replace(/-/g, "_")}`;
 
   const hostKnexInstance = Knex(hostKnexConfig);
