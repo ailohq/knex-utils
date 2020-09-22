@@ -17,7 +17,7 @@ function down(knex: Knex) {
   return knex.schema.raw("DROP FUNCTION versioning;");
 }
 
-export function createHistoryVersioningMigration() {
+export function createHistoryVersioningMigration(): Knex.Migration {
   return {
     up,
     down,

@@ -13,7 +13,7 @@ export function addMonitoringToKnex({
   knex: BaseKnex;
   monitoring: Monitoring;
 }): void {
-  // eslint-disable-next-line global-require
+  // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
   const { Severity, TransactionStatus } = require("@ailo/monitoring") as {
     Severity: typeof SeverityType;
     TransactionStatus: typeof TransactionStatusType;
@@ -63,7 +63,7 @@ export function addMonitoringToKnex({
 
       monitoring.addBreadcrumb({
         category: "knex.query_error",
-        message: `Error: ${error}; Query: ${obj.sql}`,
+        message: `Error: ${error.message}; Query: ${obj.sql}`,
         level: Severity.Info,
       });
     }

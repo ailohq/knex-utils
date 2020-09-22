@@ -5,7 +5,9 @@ export interface CreateHistoryMigrationOptions {
   typeName: string;
 }
 
-export function createHistoryMigration(options: CreateHistoryMigrationOptions) {
+export function createHistoryMigration(
+  options: CreateHistoryMigrationOptions
+): Knex.Migration {
   return {
     up: createHistoryMigrationUp(options),
     down: createHistoryMigrationDown(options),
