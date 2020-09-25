@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/ailohq/knex-utils/compare/v1.5.5...v1.7.0) (2020-09-25)
+
+
+### Features
+
+* Add `CreateAilornColumnTypeMigration` ([84ca251](https://github.com/ailohq/knex-utils/commit/84ca2512cc1fc2c2fc1bc43d231f632ab4bfca8f))
+
+
+### Bug Fixes
+
+* Change sql log level from info to debug ([3fa0d4f](https://github.com/ailohq/knex-utils/commit/3fa0d4f81e3f65d098f1503167200f7ffee7dada))
+
 ## [1.6.0](https://github.com/ailohq/knex-utils/compare/v1.5.5...v1.6.0) (2020-09-22)
 
 
