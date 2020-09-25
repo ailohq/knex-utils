@@ -2,7 +2,7 @@ import { BaseKnex } from "./BaseKnex";
 
 export interface Logger {
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  info(...data: any[]): void;
+  debug(...data: any[]): void;
   /* eslint-enable @typescript-eslint/no-explicit-any */
 }
 
@@ -49,7 +49,7 @@ export function addLoggerToKnex({
       const metadata = metadataByKnexQueryUid[obj.__knexQueryUid];
       if (metadata) {
         const duration = Date.now() - metadata.startTimestamp;
-        logger.info(`QUERY ERROR (${duration} ms): ${obj.sql}`);
+        logger.debug(`QUERY ERROR (${duration} ms): ${obj.sql}`);
         delete metadataByKnexQueryUid[obj.__knexQueryUid];
       }
     }
@@ -68,7 +68,7 @@ export function addLoggerToKnex({
       const metadata = metadataByKnexQueryUid[obj.__knexQueryUid];
       if (metadata) {
         const duration = Date.now() - metadata.startTimestamp;
-        logger.info(`QUERY SUCCESS (${duration} ms): ${obj.sql}`);
+        logger.debug(`QUERY SUCCESS (${duration} ms): ${obj.sql}`);
         delete metadataByKnexQueryUid[obj.__knexQueryUid];
       }
     }
