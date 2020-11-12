@@ -10,7 +10,7 @@ export interface LoggerOptions {
   /**
    * Will skip logging queries that contain at least one of the given strings.
    *
-   * @default ["command_journal", "event_journal", "incoming_message_journal"]
+   * @default ["command_journal", "event_journal", "incoming_message_journal", "latest_event_signatures"]
    */
   skipQueriesContaining?: string[];
 }
@@ -23,6 +23,7 @@ export function addLoggerToKnex({
       "command_journal",
       "event_journal",
       "incoming_message_journal",
+      "latest_event_signatures",
     ],
   } = {},
 }: {
