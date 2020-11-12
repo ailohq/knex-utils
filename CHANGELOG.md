@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/ailohq/knex-utils/compare/v1.7.0...v1.9.0) (2020-11-12)
+
+
+### Features
+
+* **KnexRef:** Skip logging @ailo/events sql queries by default ([6fd269a](https://github.com/ailohq/knex-utils/commit/6fd269a1db69804ff9ebd4638b69962024bb1b11))
+
+
+### Bug Fixes
+
+* **ailorn-utils:** Add backslashes to ailorn domain check ([a145c25](https://github.com/ailohq/knex-utils/commit/a145c254b8751b73b7283f8c4ede0af273f81669))
+
 ## [1.8.0](https://github.com/ailohq/knex-utils/compare/v1.5.5...v1.8.0) (2020-10-02)
 
 
