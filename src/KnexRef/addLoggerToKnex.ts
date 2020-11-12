@@ -6,12 +6,29 @@ export interface Logger {
   /* eslint-enable @typescript-eslint/no-explicit-any */
 }
 
+export interface LoggerOptions {
+  /**
+   * Will skip logging queries that contain at least one of the given strings.
+   *
+   * @default ["command_journal", "event_journal", "incoming_message_journal"]
+   */
+  skipQueriesContaining?: string[];
+}
+
 export function addLoggerToKnex({
   knex,
   logger,
+  loggerOptions: {
+    skipQueriesContaining = [
+      "command_journal",
+      "event_journal",
+      "incoming_message_journal",
+    ],
+  } = {},
 }: {
   knex: BaseKnex;
   logger: Logger;
+  loggerOptions?: LoggerOptions;
 }): void {
   const metadataByKnexQueryUid: {
     [key: string]:
@@ -48,8 +65,14 @@ export function addLoggerToKnex({
     ) => {
       const metadata = metadataByKnexQueryUid[obj.__knexQueryUid];
       if (metadata) {
-        const duration = Date.now() - metadata.startTimestamp;
-        logger.debug(`QUERY ERROR (${duration} ms): ${obj.sql}`);
+        if (
+          !skipQueriesContaining.find((substring) =>
+            obj.sql.includes(substring)
+          )
+        ) {
+          const duration = Date.now() - metadata.startTimestamp;
+          logger.debug(`QUERY ERROR (${duration} ms): ${obj.sql}`);
+        }
         delete metadataByKnexQueryUid[obj.__knexQueryUid];
       }
     }
@@ -67,8 +90,14 @@ export function addLoggerToKnex({
     ) => {
       const metadata = metadataByKnexQueryUid[obj.__knexQueryUid];
       if (metadata) {
-        const duration = Date.now() - metadata.startTimestamp;
-        logger.debug(`QUERY SUCCESS (${duration} ms): ${obj.sql}`);
+        if (
+          !skipQueriesContaining.find((substring) =>
+            obj.sql.includes(substring)
+          )
+        ) {
+          const duration = Date.now() - metadata.startTimestamp;
+          logger.debug(`QUERY SUCCESS (${duration} ms): ${obj.sql}`);
+        }
         delete metadataByKnexQueryUid[obj.__knexQueryUid];
       }
     }

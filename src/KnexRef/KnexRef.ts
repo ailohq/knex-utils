@@ -1,6 +1,6 @@
 import type { Monitoring } from "@ailo/monitoring";
 import Knex from "knex";
-import { addLoggerToKnex, Logger } from "./addLoggerToKnex";
+import { addLoggerToKnex, LoggerOptions, Logger } from "./addLoggerToKnex";
 import { addMonitoringToKnex } from "./addMonitoringToKnex";
 import { BaseKnex } from "./BaseKnex";
 
@@ -20,6 +20,7 @@ interface KnexRefOptions<K extends BaseKnex = Knex> {
    * Unused if `NODE_ENV` equals to `"test"`.
    */
   logger?: Logger;
+  loggerOptions?: LoggerOptions;
 
   /**
    * Pass this in if you need to do some additional work after your knex instance is reconfigured.
@@ -63,11 +64,20 @@ export class KnexRef<K extends BaseKnex = Knex> {
 
   private readonly logger?: Logger;
 
+  private readonly loggerOptions?: LoggerOptions;
+
   private readonly onChange?: (knex: K) => void;
 
-  constructor({ knex, monitoring, logger, onChange }: KnexRefOptions<K>) {
+  constructor({
+    knex,
+    monitoring,
+    logger,
+    loggerOptions,
+    onChange,
+  }: KnexRefOptions<K>) {
     this.monitoring = monitoring;
     this.logger = logger;
+    this.loggerOptions = loggerOptions;
     this.onChange = onChange;
     this.current = knex;
   }
@@ -84,7 +94,11 @@ export class KnexRef<K extends BaseKnex = Knex> {
         addMonitoringToKnex({ knex, monitoring: this.monitoring });
       }
       if (this.logger) {
-        addLoggerToKnex({ knex, logger: this.logger });
+        addLoggerToKnex({
+          knex,
+          logger: this.logger,
+          loggerOptions: this.loggerOptions,
+        });
       }
     }
 
