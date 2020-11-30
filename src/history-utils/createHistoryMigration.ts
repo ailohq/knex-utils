@@ -9,21 +9,20 @@ export interface CreateHistoryMigrationOptions {
   schema?: string;
 }
 
-export function createHistoryMigration({
-  schema = "public",
-  ...rest
-}: CreateHistoryMigrationOptions): Knex.Migration {
+export function createHistoryMigration(
+  options: CreateHistoryMigrationOptions
+): Knex.Migration {
   return {
-    up: createHistoryMigrationUp({ schema, ...rest }),
-    down: createHistoryMigrationDown({ schema, ...rest }),
+    up: createHistoryMigrationUp(options),
+    down: createHistoryMigrationDown(options),
   };
 }
 
 function createHistoryMigrationUp({
   tableName,
   typeName,
-  schema,
-}: Omit<CreateHistoryMigrationOptions, "schema"> & { schema: string }) {
+  schema = "public",
+}: CreateHistoryMigrationOptions) {
   return async (knex: Knex) => {
     await knex.schema.raw(`
         CREATE INDEX IF NOT EXISTS ${tableName}_sys_period ON ${schema}.${tableName}(sys_period)
@@ -46,8 +45,8 @@ function createHistoryMigrationUp({
 
 function createHistoryMigrationDown({
   tableName,
-  schema,
-}: Omit<CreateHistoryMigrationOptions, "schema"> & { schema: string }) {
+  schema = "public",
+}: CreateHistoryMigrationOptions) {
   return async (knex: Knex) => {
     await knex.schema.raw(
       `DROP TRIGGER versioning_trigger ON ${schema}.${tableName}`
