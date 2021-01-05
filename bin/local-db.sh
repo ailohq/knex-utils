@@ -40,7 +40,7 @@ function execute() {
 function exit_if_docker_disabled() {
     if [[ $USE_LOCAL_POSTGRES == "true" ]]; then
         >&2 echo "On arm64 CPUs (Apple M1 for example) we recommend running a local postgres instead of a docker one."
-        >&2 echo "To enforce running tests with docker-based postgres, run the script with USE_LOCAL_POSTGRES=false env var."
+        >&2 echo "To enforce running tests with docker-based postgres, run the script with LOCAL_DB_USE_LOCAL_POSTGRES=false env var."
         exit 1
     fi
 }
