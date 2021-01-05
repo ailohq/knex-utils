@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -euf -o pipefail
 
 function collapse_whitespace() {
@@ -36,6 +37,31 @@ function execute() {
     "$@"
 }
 
+function exit_if_docker_disabled() {
+    if [[ $USE_LOCAL_POSTGRES == "true" ]]; then
+        >&2 echo "On arm64 CPUs (Apple M1 for example) we recommend running a local postgres instead of a docker one."
+        >&2 echo "To enforce running tests with docker-based postgres, run the script with USE_LOCAL_POSTGRES=false env var."
+        exit 1
+    fi
+}
+
+function prepare_db() {
+    if [[ $USE_LOCAL_POSTGRES == "true" ]]; then
+        if ! PGPASSWORD=$DB_PASSWORD psql $DB_NAME $DB_USER -c "SELECT 1" > /dev/null; then
+            >&2 echo "Cannot connect to local database.
+Make sure you have a local db and user created like the following:
+psql postgres -c \"create database $DB_NAME\"
+psql postgres -c \"create user $DB_USER with encrypted password '$DB_PASSWORD'\"
+psql postgres -c \"grant all privileges on database $DB_NAME to $DB_USER\""
+            exit 1
+        fi
+        return
+    fi
+
+    setup_test_container
+    wait_for_db_up
+}
+
 function launch_container() {
     echo "starting container ${DB_NAME}${DOCKER_SUFFIX}"
     docker run --rm --name "${DB_NAME}${DOCKER_SUFFIX}"     \
@@ -43,7 +69,7 @@ function launch_container() {
                     -e POSTGRES_USER="${DB_USER}"           \
                     -e POSTGRES_PASSWORD="${DB_PASSWORD}"   \
                     -p 5432                                 \
-                    -d postgres:11
+                    -d arm64v8/postgres:11
     DB_PORT=$(docker port "${DB_NAME}${DOCKER_SUFFIX}" 5432 | cut -d':' -f2)
 
     echo -e "\nTo run node app/tests with local db, use following env vars:"
@@ -60,7 +86,11 @@ function launch_container() {
     chmod +x $LOCAL_DB_ENV_SCRIPT
 }
 
-function stop_container() {
+function stop_container_if_docker_enabled() {
+    if [[ $USE_LOCAL_POSTGRES == "true" ]]; then
+        return
+    fi
+
     echo "stopping container ${DB_NAME}${DOCKER_SUFFIX}"
     docker stop "${DB_NAME}${DOCKER_SUFFIX}"
 }
@@ -91,6 +121,7 @@ function parse_args() {
 
             parse_args "$@"
             ;;
+
         --suffix)
             shift
             if [ "$#" -eq 0 ]; then
@@ -117,6 +148,7 @@ EOF
             ;;
 
         launch)
+            exit_if_docker_disabled
             launch_container
             shift
             if [ "$#" -gt 0 ]; then
@@ -130,45 +162,36 @@ EOF
             ;;
 
         stop)
-            stop_container
+            exit_if_docker_disabled
+            stop_container_if_docker_enabled
             ;;
 
         container)
             shift
-
+            exit_if_docker_disabled
             if [ "$#" -eq 0 ]; then
                 docker container help
                 exit 1
             fi
-
             docker container "$@" "${DB_NAME}${DOCKER_SUFFIX}"
             ;;
 
         test)
             shift
-            setup_test_container
-            trap stop_container EXIT
-            wait_for_db_up
-            export LOG_LEVEL=${LOG_LEVEL:-"error"}
+            trap stop_container_if_docker_enabled EXIT
+            prepare_db
             execute node_modules/.bin/jest "$@"
             ;;
 
         test-debug)
             shift
-            setup_test_container
-            trap stop_container EXIT
-            wait_for_db_up
-            export LOG_LEVEL=${LOG_LEVEL:-"error"}
+            trap stop_container_if_docker_enabled EXIT
             execute node --inspect-brk node_modules/.bin/jest --runInBand --detectOpenHandles "$@"
             ;;
 
         test-migration)
             shift
-            setup_test_container
-            trap stop_container EXIT
-
-            execute wait_for_db_up
-
+            trap stop_container_if_docker_enabled EXIT
             execute yarn knex migrate:latest
             execute yarn knex migrate:rollback
             ;;
@@ -180,16 +203,23 @@ EOF
     esac
 }
 
-# ENVIRONMENT
-DB_HOST='127.0.0.1'
-DB_USER='local'
-DB_PASSWORD="$(generate_local_id)"
-DB_NAME="$(basename "$(find_package_root)")"
-DB_NAME="${DB_NAME:-postgres_local}"
+CPU=$(uname -m)
+USE_LOCAL_POSTGRES=${LOCAL_DB_USE_LOCAL_POSTGRES:-$(if [[ $CPU == "arm64" ]]; then echo "true"; fi)}
 
-# script variables
+if [[ $USE_LOCAL_POSTGRES == "true" ]]; then
+    SERVICE_NAME=$(cat package.json | jq -r ".name" | sed -e "s/-service//" | sed -e "s/-/_/g")
+    DB_USER=ailo_${SERVICE_NAME}_test
+    DB_PASSWORD=""
+    DB_NAME=$DB_USER
+else
+    DB_HOST='127.0.0.1'
+    DB_USER='local'
+    DB_PASSWORD="$(generate_local_id)"
+    DB_NAME="$(basename "$(find_package_root)")"
+    DB_PORT=""
+fi
+
 DOCKER_SUFFIX=""
-DB_PORT=""
 
 parse_args "$@"
 
