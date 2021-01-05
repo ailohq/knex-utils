@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/ailohq/knex-utils/compare/v1.9.5...v1.10.0) (2021-01-05)
+
+
+### Features
+
+* **local-db:** Allow running tests on a local database instead of the docker one. Do it by default on Apple M1 machines ([f4dbf12](https://github.com/ailohq/knex-utils/commit/f4dbf120f49237f90a2302517dfaaf71a8b4ae90))
+
 ### [1.9.5](https://github.com/ailohq/knex-utils/compare/v1.9.1...v1.9.5) (2020-11-30)
 
 ### [1.9.4](https://github.com/ailohq/knex-utils/compare/v1.9.3...v1.9.4) (2020-11-30)
