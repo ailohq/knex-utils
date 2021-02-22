@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://github.com/ailohq/knex-utils/compare/v1.10.0...v1.10.1) (2021-02-22)
+
 ## [1.10.0](https://github.com/ailohq/knex-utils/compare/v1.9.5...v1.10.0) (2021-01-05)
 
 
