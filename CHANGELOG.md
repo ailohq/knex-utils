@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/ailohq/knex-utils/compare/v1.10.0...v1.11.0) (2021-02-24)
+
+
+### Features
+
+* Add `findInBatches` knex util fn ([20138e4](https://github.com/ailohq/knex-utils/commit/20138e4bbf42e046dd46c2187456aeeee7ea2316))
+
 ### [1.10.1](https://github.com/ailohq/knex-utils/compare/v1.10.0...v1.10.1) (2021-02-22)
 
 ## [1.10.0](https://github.com/ailohq/knex-utils/compare/v1.9.5...v1.10.0) (2021-01-05)
