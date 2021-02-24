@@ -4,6 +4,20 @@ import { clearDatabase, ClearDatabaseConfig } from "./clearDatabase";
 import { truncateDatabase, TruncateDatabaseConfig } from "./truncateDatabase";
 import { createKnexChildDatabase } from "./createKnexChildDatabase";
 
+async function runAndExitIfThrows<T>(fn: () => T | Promise<T>): Promise<T> {
+  try {
+    return await fn();
+  } catch (error) {
+    // Jest swallows console log, so we need to use process.stderr instead of console.error here
+    process.stderr.write("knex migration has failed:");
+    process.stderr.write(error);
+    process.stderr.write(JSON.stringify(error));
+    // eslint-disable-next-line unicorn/no-process-exit
+    process.exit(1);
+    throw error;
+  }
+}
+
 export interface UseKnexConfig {
   knexConfig: Omit<Knex.Config, "connection"> & {
     connection: PgConnectionConfig;
@@ -93,13 +107,14 @@ export function useKnex({
   if (migrateOn === "before-all") {
     beforeAll(async () => {
       if (runsOnLatestMigration) {
-        await knex.migrate.latest();
+        await runAndExitIfThrows(() => knex.migrate.latest());
       } else {
         if (!useSeparateDatabase) {
           await clearDatabase(knex, clearConfig);
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        await knexMigrate("up", { config: knexConfig, to: migrateTo });
+        await runAndExitIfThrows(() =>
+          knexMigrate("up", { config: knexConfig, to: migrateTo })
+        );
       }
     });
 
@@ -119,10 +134,11 @@ export function useKnex({
     beforeEach(async () => {
       await clearDatabase(knex, clearConfig);
       if (runsOnLatestMigration) {
-        await knex.migrate.latest();
+        await runAndExitIfThrows(() => knex.migrate.latest());
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        await knexMigrate("up", { config: knexConfig, to: migrateTo });
+        await runAndExitIfThrows(() =>
+          knexMigrate("up", { config: knexConfig, to: migrateTo })
+        );
       }
     });
   }
