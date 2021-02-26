@@ -27,7 +27,7 @@ export function findInBatches<TRecord, TResult>(
   let rowsToYield: TResult[] = [];
 
   const fetchNextPage = async (): Promise<void> => {
-    const pageQuery = query.clone().limit(batchSize);
+    const pageQuery = query.clone().limit(batchSize).orderBy(idField, "asc");
     if (lastId) {
       void pageQuery.where(idField, ">", lastId);
     }
