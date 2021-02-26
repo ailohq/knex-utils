@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://github.com/ailohq/knex-utils/compare/v1.11.0...v1.11.2) (2021-02-26)
+
+
+### Bug Fixes
+
+* **findInBatches:** Add `.orderBy(idField, "asc")` which is crucial for it to work correctly ([7a26945](https://github.com/ailohq/knex-utils/commit/7a26945fb46ff850ad59d9c2673a935be1627f2c))
+
 ### [1.11.1](https://github.com/ailohq/knex-utils/compare/v1.11.0...v1.11.1) (2021-02-26)
 
 
