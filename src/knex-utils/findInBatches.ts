@@ -2,7 +2,7 @@ import { QueryBuilder } from "knex";
 
 /**
  * Returns an iterable of all rows, that will be fetched from db in bulks consisting of `batchSize` rows.
- * Result needs to contain a field named after `orderBy`, by which the rows will be order.
+ * Results need to contain a field named after the `orderBy` argument (`"id"` by default), by which the rows will be ordered.
  *
  * @example
  * ```ts
@@ -19,6 +19,11 @@ export function findInBatches<TRecord, TResult>(
     orderBy: idField = "id",
   }: {
     batchSize?: number;
+    /**
+     * The field by which results will be ordered, so that no result is yielded twice.
+     * Each result needs to contain that field.
+     * @default "id"
+     */
     orderBy?: string;
   } = {}
 ): AsyncIterable<TResult> {
