@@ -60,21 +60,21 @@ Let's say you want to create a `car` table.
 3. Create a migration file `20200611163000_test_car.js` to hook up both up and down sql files:
 
    ```js
-   const carMigration = require("knex-migrate-sql-file")();
+   const mainMigration = require("knex-migrate-sql-file")();
    const { createHistoryMigration } = require("@ailo/knex-utils");
-   const carHistoryMigration = createHistoryMigration({
+   const historyMigration = createHistoryMigration({
      tableName: "car",
      typeName: "car_type",
    });
 
    exports.up = async function (knex) {
-     await carMigration.up(knex);
-     await carHistoryMigration.up(knex);
+     await mainMigration.up(knex);
+     await historyMigration.up(knex);
    };
 
    exports.down = async function (knex) {
-     await carHistoryMigration.down(knex);
-     await carMigration.down(knex);
+     await historyMigration.down(knex);
+     await mainMigration.down(knex);
    };
    ```
 
