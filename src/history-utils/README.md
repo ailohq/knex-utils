@@ -28,12 +28,12 @@ This requires the original table to be created using a [PostgreSQL Type](https:/
 
 #### Creating an original table and history table at once
 
-Let's say you want to create a table for `cars`, named as `car`.
+Let's say you want to create a `car` table.
 
 1. Create a migration file `20200611163000_create_car.up.sql`:
 
    ```sql
-   create type car as (
+   create type car_type as (
        id uuid,
        name varchar(255),
        created_at timestamp,
@@ -41,7 +41,7 @@ Let's say you want to create a table for `cars`, named as `car`.
        sys_period tstzrange
    );
 
-   create table car_table of car (
+   create table car of car_type (
        id primary key DEFAULT uuid_generate_v4(),
        name not null,
        created_at not null DEFAULT now(),
@@ -53,8 +53,8 @@ Let's say you want to create a table for `cars`, named as `car`.
 2. Create a migration file `20200611163000_create_car.down.sql` for `migration:down`:
 
    ```sql
-   DROP TABLE car_table;
-   DROP TYPE car
+   DROP TABLE car;
+   DROP TYPE car_type;
    ```
 
 3. Create a migration file `20200611163000_test_car.js` to hook up both up and down sql files:
@@ -63,8 +63,8 @@ Let's say you want to create a table for `cars`, named as `car`.
    const carMigration = require("knex-migrate-sql-file")();
    const { createHistoryMigration } = require("@ailo/knex-utils");
    const carHistoryMigration = createHistoryMigration({
-     tableName: "car_table",
-     typeName: "car",
+     tableName: "car",
+     typeName: "car_type",
    });
 
    exports.up = async function (knex) {
