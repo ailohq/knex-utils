@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/ailohq/knex-utils/compare/v1.11.2...v1.12.0) (2021-05-13)
+
+
+### Features
+
+* add util to rename a table ([d26f744](https://github.com/ailohq/knex-utils/commit/d26f744636a3082231b1911b3747af81b149bed7))
+
 ### [1.11.2](https://github.com/ailohq/knex-utils/compare/v1.11.0...v1.11.2) (2021-02-26)
 
 
