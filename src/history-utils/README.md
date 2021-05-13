@@ -213,3 +213,36 @@ exports.down = async function (knex) {
   `);
 };
 ```
+
+## Renaming history-connected tables
+
+Create a migration file `20200613163000_rename_car_to_vehicle_test.js`:
+
+```js
+const { createRenameTableMigration } = require("@ailo/knex-utils");
+
+const renameCarToVehicleMigration = createRenameTableMigration({
+  oldTableName: "car",
+  oldTypeName: "car_type",
+  newTableName: "vehicle",
+  newTypeName: "vehicle_type",
+});
+
+exports.up = async function (knex) {
+  await renameCarToVehicleMigration.up(knex);
+  // Unfortunately there seems to be no way to rename constraints
+  // - renaming constraints doesn't work on typed tables
+  // - dropping the constraint and recreating it after the rename didn't seem
+  //   to work either (need further investigation)
+  // await knex.raw(`
+  //   ALTER TABLE vehicle RENAME CONSTRAINT car_pkey TO vehicle_pkey;
+  // `);
+};
+
+exports.down = async function (knex) {
+  //   await knex.raw(`
+  //   ALTER TABLE vehicle RENAME CONSTRAINT vehicle_pkey TO car_pkey;
+  // `);
+  await renameCarToVehicleMigration.down(knex);
+};
+```
