@@ -69,7 +69,8 @@ function launch_container() {
                     -e POSTGRES_USER="${DB_USER}"           \
                     -e POSTGRES_PASSWORD="${DB_PASSWORD}"   \
                     -p 5432                                 \
-                    -d postgres:12
+                    -d postgres:12                          \
+                    -c fsync=off
     DB_PORT=$(docker port "${DB_NAME}${DOCKER_SUFFIX}" 5432 | cut -d':' -f2)
 
     echo -e "\nTo run node app/tests with local db, use following env vars:"
