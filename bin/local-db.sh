@@ -159,6 +159,8 @@ EOF
 
         exec)
             shift
+            trap stop_container_if_docker_enabled EXIT
+            prepare_db
             execute "$@"
             ;;
 
