@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/ailohq/knex-utils/compare/v1.11.2...v1.13.0) (2021-06-22)
+
+
+### Features
+
+* add util to rename a table ([d26f744](https://github.com/ailohq/knex-utils/commit/d26f744636a3082231b1911b3747af81b149bed7))
+
+
+### Bug Fixes
+
+* When running `local-db exec`, make sure db is up ([fa3047b](https://github.com/ailohq/knex-utils/commit/fa3047b8f585f5e6f7026b510dc11ecfedafa7e6))
+
 ### [1.12.1](https://github.com/ailohq/knex-utils/compare/v1.12.0...v1.12.1) (2021-05-13)
 
 ## [1.12.0](https://github.com/ailohq/knex-utils/compare/v1.11.2...v1.12.0) (2021-05-13)
